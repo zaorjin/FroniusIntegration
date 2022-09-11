@@ -9,7 +9,7 @@ public class AppDataContext
   public AppDataContext(IOptions<ConnectionStringsOption> connectionStringsOption)
   {
     var connectionStringsTopsysOption = connectionStringsOption.Value;
-    Connection = new NpgsqlConnection(connectionStringsTopsysOption.Topsys);
+    Connection = new NpgsqlConnection(connectionStringsTopsysOption.Fronius);
   }
 
   public NpgsqlConnection Connection { get; set; }

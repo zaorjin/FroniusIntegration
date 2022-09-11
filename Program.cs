@@ -13,6 +13,9 @@ var builder = WebApplication.CreateBuilder(options);
 
 builder.Host.UseWindowsService();
 
+// Add options.
+builder.Services.AddOptionsConfiguration(builder.Configuration);
+
 // Add services to the container.
 builder.Services.AddControllers();
 
