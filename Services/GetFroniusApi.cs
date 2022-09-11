@@ -14,10 +14,10 @@ public class GetFroniusApi : IGetFroniusApi
     _froniusRestClient = froniusRestClient;
   }
 
-  public async Task<Generation> GetConcretingAsync()
+  public async Task<PowerFronius> GetConcretingAsync()
   {
     var request = RequestBuilder.Build(Method.Get, "/solar_api/v1/GetInverterRealtimeData.cgi?Scope=System");
-    var response = await _froniusRestClient.ExecuteAsync<StandardResponse<Generation>>(request);
+    var response = await _froniusRestClient.ExecuteAsync<StandardResponse<PowerFronius>>(request);
     return response.Data.Result;
   }
 }

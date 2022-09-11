@@ -4,5 +4,5 @@ namespace FroniusIntegration.Interfaces.Services;
 
 public interface IGetFroniusApi
 {
-  Task<Generation> GetConcretingAsync();
+  Task<PowerFronius> GetConcretingAsync();
 }
