@@ -31,6 +31,9 @@ builder.Services.AddTransient<ControllerService, ControllerService>();
 // Add AppDataContext
 builder.Services.AddScoped<AppDataContext, AppDataContext>();
 
+builder.Services.AddTransient<FroniusRestClient, FroniusRestClient>();
+builder.Services.AddSingleton<FroniusRestClientDynamic, FroniusRestClientDynamic>();
+
 var connectionString = builder.Configuration.GetConnectionString("Hangfire");
 
 builder.Services.AddHangfire(configuration =>

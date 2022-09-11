@@ -1,6 +1,7 @@
 using FroniusIntegration.Command;
 using FroniusIntegration.Entities;
 using FroniusIntegration.Handlers;
+using FroniusIntegration.Interfaces.Services;
 using FroniusIntegration.Services;
 using Hangfire;
 
@@ -8,10 +9,10 @@ namespace FroniusIntegration;
 
 public class ControllerService
 {
-  private readonly GetFroniusApi _getFroniusApi;
+  private readonly IGetFroniusApi _getFroniusApi;
   private readonly PowerEnergyHandler _powerEnergyHandler;
 
-  public ControllerService(PowerEnergyHandler powerEnergyHandler, GetFroniusApi getFroniusApi)
+  public ControllerService(PowerEnergyHandler powerEnergyHandler, IGetFroniusApi getFroniusApi)
   {
     _powerEnergyHandler = powerEnergyHandler;
     _getFroniusApi = getFroniusApi;
