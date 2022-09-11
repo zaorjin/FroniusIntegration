@@ -6,7 +6,7 @@ public class StandardResponse<T>
 
   public string Message { get; set; } = string.Empty;
 
-  public T? Result { get; set; }
+  public T? Data { get; set; }
 
   public string ErrorCode { get; set; } = string.Empty;
 

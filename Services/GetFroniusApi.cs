@@ -18,6 +18,6 @@ public class GetFroniusApi : IGetFroniusApi
   {
     var request = RequestBuilder.Build(Method.Get, "/solar_api/v1/GetInverterRealtimeData.cgi?Scope=System");
     var response = await _froniusRestClient.ExecuteAsync<StandardResponse<PowerFronius>>(request);
-    return response.Data.Result;
+    return response.Data.Data;
   }
 }
