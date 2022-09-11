@@ -2,7 +2,7 @@ using FroniusIntegration.Entities;
 
 namespace FroniusIntegration.Interfaces.Services;
 
-public interface IGetFroniusAPi
+public interface IGetFroniusApi
 {
   Task<Generation> GetConcretingAsync();
 }

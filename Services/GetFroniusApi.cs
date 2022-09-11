@@ -5,7 +5,7 @@ using RestSharp;
 
 namespace FroniusIntegration.Services;
 
-public class GetFroniusApi : IGetFroniusAPi
+public class GetFroniusApi : IGetFroniusApi
 {
   private readonly FroniusRestClient _froniusRestClient;
 
