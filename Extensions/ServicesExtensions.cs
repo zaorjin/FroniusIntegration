@@ -7,6 +7,6 @@ public static class ServicesExtensions
 {
   public static void AddCustomServices(this IServiceCollection services)
   {
-    services.AddTransient<IGetFroniusApi, GetFroniusApi>();
+    services.AddTransient<IGetFroniusApiService, GetFroniusApiService>();
   }
 }

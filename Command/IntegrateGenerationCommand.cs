@@ -5,10 +5,10 @@ namespace FroniusIntegration.Command;
 
 public class IntegrateGenerationCommand : ICommand
 {
-  public IntegrateGenerationCommand(Generation gereation)
+  public IntegrateGenerationCommand(PowerFronius powerFronius)
   {
-    Generation = gereation;
+    PowerFronius = powerFronius;
   }
 
-  public Generation Generation { get; set; }
+  public PowerFronius PowerFronius { get; set; }
 }

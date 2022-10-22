@@ -1,29 +1,26 @@
 using FroniusIntegration.Command;
-using FroniusIntegration.Entities;
 using FroniusIntegration.Handlers;
 using FroniusIntegration.Interfaces.Services;
-using FroniusIntegration.Services;
 using Hangfire;
 
 namespace FroniusIntegration;
 
 public class ControllerService
 {
-  private readonly IGetFroniusApi _getFroniusApi;
+  private readonly IGetFroniusApiService _getFroniusApiService;
   private readonly PowerEnergyHandler _powerEnergyHandler;
 
-  public ControllerService(PowerEnergyHandler powerEnergyHandler, IGetFroniusApi getFroniusApi)
+  public ControllerService(PowerEnergyHandler powerEnergyHandler, IGetFroniusApiService getFroniusApiService)
   {
     _powerEnergyHandler = powerEnergyHandler;
-    _getFroniusApi = getFroniusApi;
+    _getFroniusApiService = getFroniusApiService;
   }
 
   [DisableConcurrentExecution(0)]
   [AutomaticRetry(Attempts = 0)]
   public async Task ProcessEventsAsync()
   {
-    var result = await _getFroniusApi.GetConcretingAsync();
-    var generation = new Generation(1, 5, DateTime.Now, DateTime.Now);
-    BackgroundJob.Enqueue(() => _powerEnergyHandler.HandleAsync(new IntegrateGenerationCommand(generation)));
+    var powerFronius = await _getFroniusApiService.GetPowerFroniusAsync();
+    BackgroundJob.Enqueue(() => _powerEnergyHandler.HandleAsync(new IntegrateGenerationCommand(powerFronius)));
   }
 }
