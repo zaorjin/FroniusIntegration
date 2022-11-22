@@ -8,17 +8,20 @@ namespace FroniusIntegration.Services;
 
 public class GetFroniusApiService : IGetFroniusApiService
 {
-  private readonly FroniusRestClient _froniusRestClient;
+  private readonly FroniusRestClientDynamic _froniusRestClientDynamic;
 
-  public GetFroniusApiService(FroniusRestClient froniusRestClient)
+  public GetFroniusApiService(FroniusRestClientDynamic froniusRestClientDynamic)
   {
-    _froniusRestClient = froniusRestClient;
+    _froniusRestClientDynamic = froniusRestClientDynamic;
   }
 
-  public async Task<PowerFronius> GetPowerFroniusAsync()
+  public async Task<PowerFronius> GetPowerFroniusAsync(string inversorAddress)
   {
+    _froniusRestClientDynamic.UpdateRestClient(inversorAddress);
+    var froniusRestClient = new FroniusRestClient(_froniusRestClientDynamic);
+
     var request = RequestBuilder.Build(Method.Get, "/solar_api/v1/GetInverterRealtimeData.cgi?Scope=System");
-    var response = await _froniusRestClient.ExecuteAsync(request);
+    var response = await froniusRestClient.ExecuteAsync(request);
     var powerFronius = JsonConvert.DeserializeObject<PowerFronius>(response.Content);
     return powerFronius;
   }

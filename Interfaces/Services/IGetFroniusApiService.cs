@@ -4,5 +4,5 @@ namespace FroniusIntegration.Interfaces.Services;
 
 public interface IGetFroniusApiService
 {
-  Task<PowerFronius> GetPowerFroniusAsync();
+  Task<PowerFronius> GetPowerFroniusAsync(string inversorAddress);
 }

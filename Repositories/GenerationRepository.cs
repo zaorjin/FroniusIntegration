@@ -18,11 +18,13 @@ public class GenerationRepository : IGenerationRepository
   {
     var sqlCommand = new StringBuilder();
 
-    sqlCommand.Append("INSERT INTO generations");
-    sqlCommand.Append(" ( location_id, volume_khw )");
+    sqlCommand.Append("INSERT INTO generation_hours");
+    sqlCommand.Append(" ( location_id, volume_khw, created_at, updated_at )");
     sqlCommand.Append(" VALUES");
-    sqlCommand.Append(" ( 'PUCMINAS'");
-    sqlCommand.Append($" @{nameof(Generation.VolumeKwh)} )");
+    sqlCommand.Append($" (@{nameof(Generation.LocationId)}");
+    sqlCommand.Append($", @{nameof(Generation.VolumeKwh)} ");
+    sqlCommand.Append($", @{nameof(Generation.CreateAt)} ");
+    sqlCommand.Append($", @{nameof(Generation.UpdateAt)} )");
 
     await _context.Connection.ExecuteAsync(sqlCommand.ToString(), generation);
   }

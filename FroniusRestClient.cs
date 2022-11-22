@@ -1,3 +1,5 @@
+using FroniusIntegration.Entities;
+using FroniusIntegration.Interfaces.Repositories;
 using FroniusIntegration.Shared;
 using FroniusIntegration.Utils;
 using Microsoft.Extensions.Options;
@@ -7,13 +9,12 @@ namespace FroniusIntegration;
 
 public class FroniusRestClientDynamic : IRestClientDynamic
 {
-  public FroniusRestClientDynamic(IOptions<GetFroniusOption> getFroniusOption)
+  public void UpdateRestClient(string inversorAddress)
   {
-    var getFroniusHostOption = getFroniusOption.Value;
-    Client = new RestClient(new Uri(getFroniusHostOption.Host));
+    Client = new RestClient(new Uri($"http://{inversorAddress}"));
   }
 
-  public RestClient Client { get; set; }
+  public RestClient? Client { get; set; }
 }
 
 public class FroniusRestClient : ThrottledRestClientDynamic
@@ -29,25 +30,4 @@ public class FroniusRestClient : ThrottledRestClientDynamic
 
     return response;
   }
-
-  /*public static ICommandResult<T?> ReturnCommandHandleCustomerErrorResponse<T>(RestResponse? response, string keyEntity)
-  {
-    if (response?.Content == "")
-    {
-      return new CommandResult<T?>(
-        false,
-        $"ERRORS ON ID {keyEntity}: {response?.ErrorException?.Message ?? string.Empty}",
-        default);
-    }
-
-    var error = JsonSerializer.Deserialize<FroniusErrorResponse>(response?.Content ?? "");
-
-    var errorsString = string.Join(
-      Environment.NewLine,
-      error?.Notifications?.Select(t => t.ToString()) ?? Array.Empty<string>());
-
-    var errorMessage = $" ERRORS ON ID {keyEntity}: {(errorsString != "" ? errorsString : response?.Content)}";
-
-    return new CommandResult<T?>(false, errorMessage, default);
-  }*/
 }

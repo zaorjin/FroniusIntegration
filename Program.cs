@@ -22,6 +22,9 @@ builder.Services.AddControllers();
 // Add Handlers
 builder.Services.AddCustomHandlers();
 
+// Add Repositories
+builder.Services.AddCustomRepositories();
+
 // Add Services
 builder.Services.AddCustomServices();
 
@@ -35,7 +38,7 @@ builder.Services.AddTransient<ControllerService, ControllerService>();
 builder.Services.AddScoped<AppDataContext, AppDataContext>();
 
 builder.Services.AddTransient<FroniusRestClient, FroniusRestClient>();
-builder.Services.AddSingleton<FroniusRestClientDynamic, FroniusRestClientDynamic>();
+builder.Services.AddTransient<FroniusRestClientDynamic, FroniusRestClientDynamic>();
 
 var connectionString = builder.Configuration.GetConnectionString("Hangfire");
 
@@ -62,6 +65,10 @@ if (app.Environment.IsDevelopment())
   app.UseSwagger();
   app.UseSwaggerUI();
 }
+else
+{
+  builder.WebHost.UseUrls($"http://*:5066");
+}
 
 app.UseHttpsRedirection();
 
@@ -71,7 +78,6 @@ app.MapControllers();
 
 app.UseHangfireDashboard();
 
-const string oneMinuteCronExpression = "*/1 * * * *";
-RecurringJob.AddOrUpdate<ControllerService>(service => service!.ProcessEventsAsync(), oneMinuteCronExpression);
-
+const string oneHourCronExpression = "00 0/1 * * *";
+RecurringJob.AddOrUpdate<ControllerService>(service => service!.EnergyHoursJobAsync(), oneHourCronExpression);
 app.Run();
